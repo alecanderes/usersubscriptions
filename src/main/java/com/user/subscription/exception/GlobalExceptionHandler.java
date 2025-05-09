@@ -15,18 +15,27 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<Map<String, Object>> handleUserNotFound(UserNotFoundException ex) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("errorCode", HttpStatus.NOT_FOUND.value());
-        response.put("message", ex.getMessage());
+        Map<String, Object> response = createResponse(ex, HttpStatus.NOT_FOUND);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
     @ExceptionHandler(SubscriptionNotFoundException.class)
     public ResponseEntity<Map<String, Object>> handleSubscriptionNotFound(SubscriptionNotFoundException ex) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("errorCode", HttpStatus.NOT_FOUND.value());
-        response.put("message", ex.getMessage());
+        Map<String, Object> response = createResponse(ex, HttpStatus.NOT_FOUND);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    @ExceptionHandler(DuplicateSubscriptionException.class)
+    public ResponseEntity<Map<String, Object>> handleDuplicateSubscription(DuplicateSubscriptionException ex) {
+        Map<String, Object> response = createResponse(ex, HttpStatus.CONFLICT);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+    }
+
+    private Map<String, Object> createResponse(RuntimeException ex, HttpStatus status) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("errorCode", status.value());
+        response.put("message", ex.getMessage());
+        return response;
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

@@ -11,11 +11,13 @@ import java.util.Set;
 public interface SubscriptionRepository extends JpaRepository<Subscription, Long> {
 
     @Query(value = """
-        SELECT * FROM subscriptions s
+        SELECT s.* FROM subscriptions s
         INNER JOIN user_subscriptions su ON s.id = su.subscription_id
         GROUP BY s.id
         ORDER BY COUNT(su.user_id) DESC
         LIMIT 3
         """, nativeQuery = true)
     Set<Subscription> findTopThreeSubscriptions();
+
+    boolean existsByName(String name);
 }

@@ -1,8 +1,6 @@
 package com.user.subscription.rest;
 
-import com.user.subscription.domain.Subscription;
 import com.user.subscription.dto.SubscriptionDto;
-import com.user.subscription.repository.SubscriptionRepository;
 import com.user.subscription.service.SubscriptionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -31,8 +29,7 @@ public class SubscriptionController {
 
     @GetMapping("/{id}")
     public ResponseEntity<SubscriptionDto> get(@PathVariable Long id) {
-        SubscriptionDto subscription = subscriptionService.getSubscription(id);
-        return ResponseEntity.ok(subscription);
+        return ResponseEntity.ok(subscriptionService.getSubscription(id));
     }
 
     @GetMapping
