@@ -18,6 +18,4 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, Long
         LIMIT 3
         """, nativeQuery = true)
     Set<Subscription> findTopThreeSubscriptions();
-
-    boolean existsByName(String name);
 }
